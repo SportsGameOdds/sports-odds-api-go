@@ -1,8 +1,8 @@
 package paramutil
 
 import (
-	"github.com/stainless-sdks/sports-odds-api-go/packages/param"
-	"github.com/stainless-sdks/sports-odds-api-go/packages/respjson"
+	"github.com/SportsGameOdds/sports-odds-api-go/packages/param"
+	"github.com/SportsGameOdds/sports-odds-api-go/packages/respjson"
 )
 
 func AddrIfPresent[T comparable](v param.Opt[T]) *T {

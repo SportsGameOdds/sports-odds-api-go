@@ -8,9 +8,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stainless-sdks/sports-odds-api-go"
-	"github.com/stainless-sdks/sports-odds-api-go/internal/testutil"
-	"github.com/stainless-sdks/sports-odds-api-go/option"
+	"github.com/SportsGameOdds/sports-odds-api-go"
+	"github.com/SportsGameOdds/sports-odds-api-go/internal/testutil"
+	"github.com/SportsGameOdds/sports-odds-api-go/option"
 )
 
 func TestTeamGetWithOptionalParams(t *testing.T) {

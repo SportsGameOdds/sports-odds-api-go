@@ -3,8 +3,8 @@ package respjson_test
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/stainless-sdks/sports-odds-api-go/internal/apijson"
-	rj "github.com/stainless-sdks/sports-odds-api-go/packages/respjson"
+	"github.com/SportsGameOdds/sports-odds-api-go/internal/apijson"
+	rj "github.com/SportsGameOdds/sports-odds-api-go/packages/respjson"
 	"reflect"
 	"testing"
 )

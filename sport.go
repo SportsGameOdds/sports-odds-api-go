@@ -7,10 +7,10 @@ import (
 	"net/http"
 	"slices"
 
-	"github.com/stainless-sdks/sports-odds-api-go/internal/apijson"
-	"github.com/stainless-sdks/sports-odds-api-go/internal/requestconfig"
-	"github.com/stainless-sdks/sports-odds-api-go/option"
-	"github.com/stainless-sdks/sports-odds-api-go/packages/respjson"
+	"github.com/SportsGameOdds/sports-odds-api-go/internal/apijson"
+	"github.com/SportsGameOdds/sports-odds-api-go/internal/requestconfig"
+	"github.com/SportsGameOdds/sports-odds-api-go/option"
+	"github.com/SportsGameOdds/sports-odds-api-go/packages/respjson"
 )
 
 // SportService contains methods and other services that help with interacting with

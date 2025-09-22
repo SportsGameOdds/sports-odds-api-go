@@ -2,7 +2,7 @@ package param
 
 import (
 	"encoding/json"
-	"github.com/stainless-sdks/sports-odds-api-go/internal/encoding/json/sentinel"
+	"github.com/SportsGameOdds/sports-odds-api-go/internal/encoding/json/sentinel"
 	"reflect"
 )
 

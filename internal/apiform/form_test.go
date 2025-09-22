@@ -2,7 +2,7 @@ package apiform
 
 import (
 	"bytes"
-	"github.com/stainless-sdks/sports-odds-api-go/packages/param"
+	"github.com/SportsGameOdds/sports-odds-api-go/packages/param"
 	"io"
 	"mime/multipart"
 	"strings"

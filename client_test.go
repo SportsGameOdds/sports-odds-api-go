@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stainless-sdks/sports-odds-api-go"
-	"github.com/stainless-sdks/sports-odds-api-go/internal"
-	"github.com/stainless-sdks/sports-odds-api-go/option"
+	"github.com/SportsGameOdds/sports-odds-api-go"
+	"github.com/SportsGameOdds/sports-odds-api-go/internal"
+	"github.com/SportsGameOdds/sports-odds-api-go/option"
 )
 
 type closureTransport struct {

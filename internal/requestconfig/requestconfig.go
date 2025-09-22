@@ -18,10 +18,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/stainless-sdks/sports-odds-api-go/internal"
-	"github.com/stainless-sdks/sports-odds-api-go/internal/apierror"
-	"github.com/stainless-sdks/sports-odds-api-go/internal/apiform"
-	"github.com/stainless-sdks/sports-odds-api-go/internal/apiquery"
+	"github.com/SportsGameOdds/sports-odds-api-go/internal"
+	"github.com/SportsGameOdds/sports-odds-api-go/internal/apierror"
+	"github.com/SportsGameOdds/sports-odds-api-go/internal/apiform"
+	"github.com/SportsGameOdds/sports-odds-api-go/internal/apiquery"
 )
 
 func getDefaultHeaders() map[string]string {
