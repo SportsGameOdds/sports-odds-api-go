@@ -8,12 +8,12 @@ import (
 	"net/url"
 	"slices"
 
-	"github.com/stainless-sdks/sports-odds-api-go/internal/apijson"
-	"github.com/stainless-sdks/sports-odds-api-go/internal/apiquery"
-	"github.com/stainless-sdks/sports-odds-api-go/internal/requestconfig"
-	"github.com/stainless-sdks/sports-odds-api-go/option"
-	"github.com/stainless-sdks/sports-odds-api-go/packages/param"
-	"github.com/stainless-sdks/sports-odds-api-go/packages/respjson"
+	"github.com/SportsGameOdds/sports-odds-api-go/internal/apijson"
+	"github.com/SportsGameOdds/sports-odds-api-go/internal/apiquery"
+	"github.com/SportsGameOdds/sports-odds-api-go/internal/requestconfig"
+	"github.com/SportsGameOdds/sports-odds-api-go/option"
+	"github.com/SportsGameOdds/sports-odds-api-go/packages/param"
+	"github.com/SportsGameOdds/sports-odds-api-go/packages/respjson"
 )
 
 // StatService contains methods and other services that help with interacting with

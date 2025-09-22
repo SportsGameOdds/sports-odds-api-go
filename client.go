@@ -8,8 +8,8 @@ import (
 	"os"
 	"slices"
 
-	"github.com/stainless-sdks/sports-odds-api-go/internal/requestconfig"
-	"github.com/stainless-sdks/sports-odds-api-go/option"
+	"github.com/SportsGameOdds/sports-odds-api-go/internal/requestconfig"
+	"github.com/SportsGameOdds/sports-odds-api-go/option"
 )
 
 // Client creates a struct with services and top level methods that help with

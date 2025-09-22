@@ -14,7 +14,7 @@ import (
 	"encoding"
 	"encoding/base64"
 	"fmt"
-	"github.com/stainless-sdks/sports-odds-api-go/internal/encoding/json/shims"
+	"github.com/SportsGameOdds/sports-odds-api-go/internal/encoding/json/shims"
 	"reflect"
 	"strconv"
 	"strings"

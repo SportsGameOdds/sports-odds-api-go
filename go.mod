@@ -1,4 +1,4 @@
-module github.com/stainless-sdks/sports-odds-api-go
+module github.com/SportsGameOdds/sports-odds-api-go
 
 go 1.22
 
