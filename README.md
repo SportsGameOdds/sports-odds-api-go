@@ -1,37 +1,47 @@
-# Sports Game Odds Go API Library
+# Sports Odds API - Live Sports Data & Sportsbook Betting Odds - Powered by SportsGameOdds Go API Library
 
-<!-- x-release-please-start-version -->
+Get live betting odds, spreads, and totals for NFL, NBA, MLB, and 50 additional sports and leagues. Production-ready Go SDK with WebSocket support, 99.9% uptime, and sub-minute updates during live games. Perfect for developers building sportsbook platforms, odds comparison tools, positive EV models, and anything else that requires fast, accurate sports data.
 
 <a href="https://pkg.go.dev/github.com/SportsGameOdds/sports-odds-api-go"><img src="https://pkg.go.dev/badge/github.com/SportsGameOdds/sports-odds-api-go.svg" alt="Go Reference"></a>
 
-<!-- x-release-please-end -->
+This library provides convenient access to the Sports Game Odds REST API from applications written in Go.
 
-The Sports Game Odds Go library provides convenient access to the [Sports Game Odds REST API](https://sportsgameodds.com/docs/)
-from applications written in Go.
+The REST API documentation can be found on [sportsgameodds.com](https://sportsgameodds.com/docs/). The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainless.com/).
 
-## Installation
+## Features
 
-<!-- x-release-please-start-version -->
+**For developers building the next generation of sports stats and/or betting applications:**
+
+- 📈 **3k+ odds markets** including moneylines, spreads, over/unders, team props, player props & more
+- 🏈 **50+ leagues covered** including NFL, NBA, MLB, NHL, NCAAF, NCAAB, EPL, UCL, UFC, PGA, ATP & more
+- 📊 **80+ sportsbooks** with unified odds formats, alt lines & deeplinks
+- 📺 **Live scores & stats** coverage on all games, teams, and players
+- ⚡ **Sub-100ms response times** and sub-minute updates for fast data
+- 🔧 **Typed requests & responses** leveraging Go structs and JSON tags
+- 💰 **Developer-friendly pricing** with a generous free tier
+- ⏱️ **5-minute setup** with copy-paste examples
+
+## Installation
 
 ```go
 import (
-	"github.com/SportsGameOdds/sports-odds-api-go" // imported as sportsoddsapi
+    "github.com/SportsGameOdds/sports-odds-api-go" // imported as sportsoddsapi
 )
 ```
 
-<!-- x-release-please-end -->
-
 Or to pin the version:
-
-<!-- x-release-please-start-version -->
 
 ```sh
 go get -u 'github.com/SportsGameOdds/sports-odds-api-go@v0.0.1'
 ```
 
-<!-- x-release-please-end -->
+## Obtain an API Key
+
+Get a free API key from [sportsgameodds.com](https://sportsgameodds.com/pricing).
+
+Unlike enterprise-only solutions, the Sports Game Odds API offers a developer-friendly experience, transparent pricing, comprehensive documentation, and a generous free tier.
 
 ## Requirements
 
@@ -45,462 +55,233 @@ The full API of this library can be found in [api.md](api.md).
 package main
 
 import (
-	"context"
-	"fmt"
+    "context"
+    "fmt"
 
-	"github.com/SportsGameOdds/sports-odds-api-go"
-	"github.com/SportsGameOdds/sports-odds-api-go/option"
+    "github.com/SportsGameOdds/sports-odds-api-go"
+    "github.com/SportsGameOdds/sports-odds-api-go/option"
 )
 
 func main() {
-	client := sportsoddsapi.NewClient(
-		option.WithAPIKeyParam("My API Key Param"), // defaults to os.LookupEnv("SPORTS_ODDS_API_KEY_HEADER")
-	)
-	page, err := client.Events.Get(context.TODO(), sportsoddsapi.EventGetParams{})
-	if err != nil {
-		panic(err.Error())
-	}
-	fmt.Printf("%+v\n", page)
-}
-
-```
-
-### Request fields
-
-The sportsoddsapi library uses the [`omitzero`](https://tip.golang.org/doc/go1.24#encodingjsonpkgencodingjson)
-semantics from the Go 1.24+ `encoding/json` release for request fields.
-
-Required primitive fields (`int64`, `string`, etc.) feature the tag <code>\`json:"...,required"\`</code>. These
-fields are always serialized, even their zero values.
-
-Optional primitive types are wrapped in a `param.Opt[T]`. These fields can be set with the provided constructors, `sportsoddsapi.String(string)`, `sportsoddsapi.Int(int64)`, etc.
-
-Any `param.Opt[T]`, map, slice, struct or string enum uses the
-tag <code>\`json:"...,omitzero"\`</code>. Its zero value is considered omitted.
-
-The `param.IsOmitted(any)` function can confirm the presence of any `omitzero` field.
-
-```go
-p := sportsoddsapi.ExampleParams{
-	ID:   "id_xxx",                    // required property
-	Name: sportsoddsapi.String("..."), // optional property
-
-	Point: sportsoddsapi.Point{
-		X: 0,                    // required field will serialize as 0
-		Y: sportsoddsapi.Int(1), // optional field will serialize as 1
-		// ... omitted non-required fields will not be serialized
-	},
-
-	Origin: sportsoddsapi.Origin{}, // the zero value of [Origin] is considered omitted
+    client := sportsoddsapi.NewClient(
+        option.WithAPIKeyParam("My API Key Param"), // defaults to os.LookupEnv("SPORTS_ODDS_API_KEY_HEADER")
+    )
+    page, err := client.Events.Get(context.TODO(), sportsoddsapi.EventGetParams{})
+    if err != nil {
+        panic(err.Error())
+    }
+    fmt.Printf("%+v\n", page)
 }
 ```
 
-To send `null` instead of a `param.Opt[T]`, use `param.Null[T]()`.
-To send `null` instead of a struct `T`, use `param.NullStruct[T]()`.
+# Real-Time Event Streaming API
+
+This API endpoint is only available to **AllStar** and **custom plan** subscribers. It is not included with basic subscription tiers. [Contact support](mailto:api@sportsgameodds.com) to get access.
+
+This streaming API is currently in **beta**. API call patterns, response formats, and functionality may change. Fully managed streaming via SDK may be available in future releases.
+
+Our Streaming API provides real-time updates for Event objects through WebSocket connections. Instead of polling our REST endpoints, you can maintain a persistent connection to receive instant notifications when events change. This is ideal for applications that need immediate updates with minimal delay.
+
+We use [Pusher Protocol](https://pusher.com/docs/channels/library_auth_reference/pusher-websockets-protocol/) for WebSocket communication. While you can connect using any WebSocket library, we strongly recommend using any [Pusher Client Library](https://pusher.com/docs/channels/library_auth_reference/pusher-client-libraries) (ex: [Go](https://github.com/pusher/pusher-http-go))
+
+## How It Works
+
+The streaming process involves two steps:
+
+1. **Get Connection Details**: Make a request using `client.Stream.Events()` to receive:
+    - WebSocket authentication credentials
+    - WebSocket URL/channel info
+    - Initial snapshot of current data
+
+2. **Connect and Stream**: Use the provided details to connect via Pusher (or another WebSocket library) and receive real-time `eventID` notifications for changed events
+
+Your API key will have limits on concurrent streams.
+
+## Available Feeds
+
+Subscribe to different feeds using the `feed` query parameter:
+
+| Feed              | Description                                                                 | Required Parameters |
+| ----------------- | --------------------------------------------------------------------------- | ------------------- |
+| `events:live`     | All events currently in progress (started but not finished)                | None                |
+| `events:upcoming` | Upcoming events with available odds for a specific league                  | `leagueID`          |
+| `events:byid`     | Updates for a single specific event                                         | `eventID`           |
+
+The number of supported feeds will increase over time. Please reach out if you have a use case which can't be covered by these feeds.
+
+## Quick Start Example
+
+Here's the minimal code to connect to live events:
 
 ```go
-p.Name = param.Null[string]()       // 'null' instead of string
-p.Point = param.NullStruct[Point]() // 'null' instead of struct
+package main
 
-param.IsNull(p.Name)  // true
-param.IsNull(p.Point) // true
-```
+import (
+    "context"
+    "fmt"
+    "log"
 
-Request structs contain a `.SetExtraFields(map[string]any)` method which can send non-conforming
-fields in the request body. Extra fields overwrite any struct fields with a matching
-key. For security reasons, only use `SetExtraFields` with trusted data.
-
-To send a custom value instead of a struct, use `param.Override[T](value)`.
-
-```go
-// In cases where the API specifies a given type,
-// but you want to send something else, use [SetExtraFields]:
-p.SetExtraFields(map[string]any{
-	"x": 0.01, // send "x" as a float instead of int
-})
-
-// Send a number instead of an object
-custom := param.Override[sportsoddsapi.FooParams](12)
-```
-
-### Request unions
-
-Unions are represented as a struct with fields prefixed by "Of" for each of it's variants,
-only one field can be non-zero. The non-zero field will be serialized.
-
-Sub-properties of the union can be accessed via methods on the union struct.
-These methods return a mutable pointer to the underlying data, if present.
-
-```go
-// Only one field can be non-zero, use param.IsOmitted() to check if a field is set
-type AnimalUnionParam struct {
-	OfCat *Cat `json:",omitzero,inline`
-	OfDog *Dog `json:",omitzero,inline`
-}
-
-animal := AnimalUnionParam{
-	OfCat: &Cat{
-		Name: "Whiskers",
-		Owner: PersonParam{
-			Address: AddressParam{Street: "3333 Coyote Hill Rd", Zip: 0},
-		},
-	},
-}
-
-// Mutating a field
-if address := animal.GetOwner().GetAddress(); address != nil {
-	address.ZipCode = 94304
-}
-```
-
-### Response objects
-
-All fields in response structs are ordinary value types (not pointers or wrappers).
-Response structs also include a special `JSON` field containing metadata about
-each property.
-
-```go
-type Animal struct {
-	Name   string `json:"name,nullable"`
-	Owners int    `json:"owners"`
-	Age    int    `json:"age"`
-	JSON   struct {
-		Name        respjson.Field
-		Owner       respjson.Field
-		Age         respjson.Field
-		ExtraFields map[string]respjson.Field
-	} `json:"-"`
-}
-```
-
-To handle optional data, use the `.Valid()` method on the JSON field.
-`.Valid()` returns true if a field is not `null`, not present, or couldn't be marshaled.
-
-If `.Valid()` is false, the corresponding field will simply be its zero value.
-
-```go
-raw := `{"owners": 1, "name": null}`
-
-var res Animal
-json.Unmarshal([]byte(raw), &res)
-
-// Accessing regular fields
-
-res.Owners // 1
-res.Name   // ""
-res.Age    // 0
-
-// Optional field checks
-
-res.JSON.Owners.Valid() // true
-res.JSON.Name.Valid()   // false
-res.JSON.Age.Valid()    // false
-
-// Raw JSON values
-
-res.JSON.Owners.Raw()                  // "1"
-res.JSON.Name.Raw() == "null"          // true
-res.JSON.Name.Raw() == respjson.Null   // true
-res.JSON.Age.Raw() == ""               // true
-res.JSON.Age.Raw() == respjson.Omitted // true
-```
-
-These `.JSON` structs also include an `ExtraFields` map containing
-any properties in the json response that were not specified
-in the struct. This can be useful for API features not yet
-present in the SDK.
-
-```go
-body := res.JSON.ExtraFields["my_unexpected_field"].Raw()
-```
-
-### Response Unions
-
-In responses, unions are represented by a flattened struct containing all possible fields from each of the
-object variants.
-To convert it to a variant use the `.AsFooVariant()` method or the `.AsAny()` method if present.
-
-If a response value union contains primitive values, primitive fields will be alongside
-the properties but prefixed with `Of` and feature the tag `json:"...,inline"`.
-
-```go
-type AnimalUnion struct {
-	// From variants [Dog], [Cat]
-	Owner Person `json:"owner"`
-	// From variant [Dog]
-	DogBreed string `json:"dog_breed"`
-	// From variant [Cat]
-	CatBreed string `json:"cat_breed"`
-	// ...
-
-	JSON struct {
-		Owner respjson.Field
-		// ...
-	} `json:"-"`
-}
-
-// If animal variant
-if animal.Owner.Address.ZipCode == "" {
-	panic("missing zip code")
-}
-
-// Switch on the variant
-switch variant := animal.AsAny().(type) {
-case Dog:
-case Cat:
-default:
-	panic("unexpected type")
-}
-```
-
-### RequestOptions
-
-This library uses the functional options pattern. Functions defined in the
-`option` package return a `RequestOption`, which is a closure that mutates a
-`RequestConfig`. These options can be supplied to the client or at individual
-requests. For example:
-
-```go
-client := sportsoddsapi.NewClient(
-	// Adds a header to every request made by the client
-	option.WithHeader("X-Some-Header", "custom_header_info"),
+    "github.com/SportsGameOdds/sports-odds-api-go"
+    "github.com/SportsGameOdds/sports-odds-api-go/option"
+    "github.com/pusher/pusher-http-go"
 )
 
-client.Events.Get(context.TODO(), ...,
-	// Override the header
-	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
-	// Add an undocumented field to the request body, using sjson syntax
-	option.WithJSONSet("some.json.path", map[string]string{"my": "object"}),
-)
-```
+func main() {
+    const STREAM_FEED = "events:live" // ex: events:upcoming, events:byid, events:live
+    const API_KEY = "YOUR API KEY"
 
-The request option `option.WithDebugLog(nil)` may be helpful while debugging.
+    client := sportsoddsapi.NewClient(option.WithAPIKeyParam(API_KEY))
 
-See the [full list of request options](https://pkg.go.dev/github.com/SportsGameOdds/sports-odds-api-go/option).
+    // Call this endpoint to get initial data and connection parameters
+    streamInfo, err := client.Stream.Events(context.TODO(), sportsoddsapi.StreamEventParams{Feed: sportsoddsapi.String(STREAM_FEED)})
+    if err != nil {
+        log.Fatal(err)
+    }
 
-### Pagination
+    // Seed initial data
+    events := make(map[string]any)
+    for _, event := range streamInfo.Data {
+        events[event.EventID] = event
+    }
 
-This library provides some conveniences for working with paginated list endpoints.
+    // Connect to WebSocket server
+    pusherClient := pusher.Client{
+        AppID: streamInfo.PusherKey,
+        Key:   streamInfo.PusherKey,
+        Secret: "your_secret",
+    }
 
-You can use `.ListAutoPaging()` methods to iterate through items across all pages:
+    channel := pusherClient.Channel(streamInfo.Channel)
+    channel.Bind("data", func(changedEvents []map[string]any) {
+        for _, changed := range changedEvents {
+            eventID := changed["eventID"].(string)
+            page, _ := client.Events.Get(context.TODO(), sportsoddsapi.EventGetParams{})
+            for _, event := range page.Data {
+                if event.EventID == eventID {
+                    events[eventID] = event
+                }
+            }
+        }
+    })
 
-```go
-iter := client.Events.GetAutoPaging(context.TODO(), sportsoddsapi.EventGetParams{
-	Limit: sportsoddsapi.Float(30),
-})
-// Automatically fetches more pages as needed.
-for iter.Next() {
-	event := iter.Current()
-	fmt.Printf("%+v\n", event)
-}
-if err := iter.Err(); err != nil {
-	panic(err.Error())
-}
-```
-
-Or you can use simple `.List()` methods to fetch a single page and receive a standard response object
-with additional helper methods like `.GetNextPage()`, e.g.:
-
-```go
-page, err := client.Events.Get(context.TODO(), sportsoddsapi.EventGetParams{
-	Limit: sportsoddsapi.Float(30),
-})
-for page != nil {
-	for _, event := range page.Data {
-		fmt.Printf("%+v\n", event)
-	}
-	page, err = page.GetNextPage()
-}
-if err != nil {
-	panic(err.Error())
+    fmt.Println("Streaming started...")
 }
 ```
 
-### Errors
+### Request & Response types
 
-When the API returns a non-success status code, we return an error with type
-`*sportsoddsapi.Error`. This contains the `StatusCode`, `*http.Request`, and
-`*http.Response` values of the request, as well as the JSON of the error body
-(much like other response objects in the SDK).
+This library includes Go type definitions for all request params and response fields.  
+Responses are returned as Go structs, providing full type safety and IDE autocomplete.
 
-To handle errors, we recommend that you use the `errors.As` pattern:
+## Handling errors
+
+When the library is unable to connect to the API,
+or if the API returns a non-success status code (i.e., 4xx or 5xx response),
+an error of type `*sportsoddsapi.Error` will be returned:
 
 ```go
 _, err := client.Events.Get(context.TODO(), sportsoddsapi.EventGetParams{})
 if err != nil {
-	var apierr *sportsoddsapi.Error
-	if errors.As(err, &apierr) {
-		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
-		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
-	}
-	panic(err.Error()) // GET "/events/": 400 Bad Request { ... }
+    var apierr *sportsoddsapi.Error
+    if errors.As(err, &apierr) {
+        fmt.Println(apierr.StatusCode)
+    } else {
+        panic(err)
+    }
 }
 ```
 
-When other errors occur, they are returned unwrapped; for example,
-if HTTP transport fails, you might receive `*url.Error` wrapping `*net.OpError`.
+Error codes are as follows:
 
-### Timeouts
-
-Requests do not time out by default; use context to configure a timeout for a request lifecycle.
-
-Note that if a request is [retried](#retries), the context timeout does not start over.
-To set a per-retry timeout, use `option.WithRequestTimeout()`.
-
-```go
-// This sets the timeout for the request, including all the retries.
-ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
-defer cancel()
-client.Events.Get(
-	ctx,
-	sportsoddsapi.EventGetParams{},
-	// This sets the per-retry timeout
-	option.WithRequestTimeout(20*time.Second),
-)
-```
-
-### File uploads
-
-Request parameters that correspond to file uploads in multipart requests are typed as
-`io.Reader`. The contents of the `io.Reader` will by default be sent as a multipart form
-part with the file name of "anonymous_file" and content-type of "application/octet-stream".
-
-The file name and content-type can be customized by implementing `Name() string` or `ContentType()
-string` on the run-time type of `io.Reader`. Note that `os.File` implements `Name() string`, so a
-file returned by `os.Open` will be sent with the file name on disk.
-
-We also provide a helper `sportsoddsapi.File(reader io.Reader, filename string, contentType string)`
-which can be used to wrap any `io.Reader` with the appropriate file name and content type.
+| Status Code | Error Type                 |
+| ----------- | -------------------------- |
+| 400         | `BadRequestError`          |
+| 401         | `AuthenticationError`      |
+| 403         | `PermissionDeniedError`    |
+| 404         | `NotFoundError`            |
+| 422         | `UnprocessableEntityError` |
+| 429         | `RateLimitError`           |
+| >=500       | `InternalServerError`      |
+| N/A         | `APIConnectionError`       |
 
 ### Retries
 
-Certain errors will be automatically retried 2 times by default, with a short exponential backoff.
-We retry by default all connection errors, 408 Request Timeout, 409 Conflict, 429 Rate Limit,
-and >=500 Internal errors.
-
-You can use the `WithMaxRetries` option to configure or disable this:
+Certain errors will be automatically retried 2 times by default, with exponential backoff.  
+You can configure retries with the `option.WithMaxRetries` option:
 
 ```go
-// Configure the default for all requests:
-client := sportsoddsapi.NewClient(
-	option.WithMaxRetries(0), // default is 2
-)
+client := sportsoddsapi.NewClient(option.WithMaxRetries(0)) // default is 2
 
-// Override per-request:
 client.Events.Get(
-	context.TODO(),
-	sportsoddsapi.EventGetParams{},
-	option.WithMaxRetries(5),
+    context.TODO(),
+    sportsoddsapi.EventGetParams{},
+    option.WithMaxRetries(5),
 )
 ```
 
-### Accessing raw response data (e.g. response headers)
+### Timeouts
 
-You can access the raw HTTP response data by using the `option.WithResponseInto()` request option. This is useful when
-you need to examine response headers, status codes, or other details.
+Requests do not time out by default; use context to configure a timeout:
 
 ```go
-// Create a variable to store the HTTP response
+ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+defer cancel()
+
+client.Events.Get(ctx, sportsoddsapi.EventGetParams{}, option.WithRequestTimeout(20*time.Second))
+```
+
+## Auto-pagination
+
+```go
+iter := client.Events.GetAutoPaging(context.TODO(), sportsoddsapi.EventGetParams{
+    Limit: sportsoddsapi.Float(30),
+})
+for iter.Next() {
+    event := iter.Current()
+    fmt.Printf("%+v\n", event)
+}
+if err := iter.Err(); err != nil {
+    panic(err.Error())
+}
+```
+
+Or with `.GetNextPage()`:
+
+```go
+page, err := client.Events.Get(context.TODO(), sportsoddsapi.EventGetParams{Limit: sportsoddsapi.Float(30)})
+for page != nil {
+    for _, event := range page.Data {
+        fmt.Printf("%+v\n", event)
+    }
+    page, err = page.GetNextPage()
+}
+```
+
+## Advanced Usage
+
+### Accessing raw response data (e.g., headers)
+
+```go
 var response *http.Response
 page, err := client.Events.Get(
-	context.TODO(),
-	sportsoddsapi.EventGetParams{},
-	option.WithResponseInto(&response),
+    context.TODO(),
+    sportsoddsapi.EventGetParams{},
+    option.WithResponseInto(&response),
 )
-if err != nil {
-	// handle error
-}
-fmt.Printf("%+v\n", page)
-
-fmt.Printf("Status Code: %d\n", response.StatusCode)
-fmt.Printf("Headers: %+#v\n", response.Header)
+fmt.Println(response.StatusCode)
+fmt.Println(response.Header)
 ```
 
 ### Making custom/undocumented requests
 
-This library is typed for convenient access to the documented API. If you need to access undocumented
-endpoints, params, or response properties, the library can still be used.
-
-#### Undocumented endpoints
-
-To make requests to undocumented endpoints, you can use `client.Get`, `client.Post`, and other HTTP verbs.
-`RequestOptions` on the client, such as retries, will be respected when making these requests.
-
 ```go
-var (
-    // params can be an io.Reader, a []byte, an encoding/json serializable object,
-    // or a "…Params" struct defined in this library.
-    params map[string]any
-
-    // result can be an []byte, *http.Response, a encoding/json deserializable object,
-    // or a model defined in this library.
-    result *http.Response
-)
-err := client.Post(context.Background(), "/unspecified", params, &result)
+var result *http.Response
+params := map[string]any{"my_param": true}
+err := client.Post(context.Background(), "/foo", params, &result)
 if err != nil {
-    …
+    panic(err)
 }
 ```
-
-#### Undocumented request params
-
-To make requests using undocumented parameters, you may use either the `option.WithQuerySet()`
-or the `option.WithJSONSet()` methods.
-
-```go
-params := FooNewParams{
-    ID:   "id_xxxx",
-    Data: FooNewParamsData{
-        FirstName: sportsoddsapi.String("John"),
-    },
-}
-client.Foo.New(context.Background(), params, option.WithJSONSet("data.last_name", "Doe"))
-```
-
-#### Undocumented response properties
-
-To access undocumented response properties, you may either access the raw JSON of the response as a string
-with `result.JSON.RawJSON()`, or get the raw JSON of a particular field on the result with
-`result.JSON.Foo.Raw()`.
-
-Any fields that are not present on the response struct will be saved and can be accessed by `result.JSON.ExtraFields()` which returns the extra fields as a `map[string]Field`.
-
-### Middleware
-
-We provide `option.WithMiddleware` which applies the given
-middleware to requests.
-
-```go
-func Logger(req *http.Request, next option.MiddlewareNext) (res *http.Response, err error) {
-	// Before the request
-	start := time.Now()
-	LogReq(req)
-
-	// Forward the request to the next handler
-	res, err = next(req)
-
-	// Handle stuff after the request
-	end := time.Now()
-	LogRes(res, err, start - end)
-
-    return res, err
-}
-
-client := sportsoddsapi.NewClient(
-	option.WithMiddleware(Logger),
-)
-```
-
-When multiple middlewares are provided as variadic arguments, the middlewares
-are applied left to right. If `option.WithMiddleware` is given
-multiple times, for example first in the client then the method, the
-middleware in the client will run first and the middleware given in the method
-will run next.
-
-You may also replace the default `http.Client` with
-`option.WithHTTPClient(client)`. Only one http client is
-accepted (this overwrites any previous client) and receives requests after any
-middleware has been applied.
 
 ## Semantic versioning
 
