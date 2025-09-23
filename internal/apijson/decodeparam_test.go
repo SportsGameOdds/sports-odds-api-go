@@ -3,8 +3,8 @@ package apijson_test
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/stainless-sdks/sports-odds-api-go/internal/apijson"
-	"github.com/stainless-sdks/sports-odds-api-go/packages/param"
+	"github.com/SportsGameOdds/sports-odds-api-go/internal/apijson"
+	"github.com/SportsGameOdds/sports-odds-api-go/packages/param"
 	"reflect"
 	"testing"
 )

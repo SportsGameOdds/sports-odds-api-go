@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"time"
 
-	shimjson "github.com/stainless-sdks/sports-odds-api-go/internal/encoding/json"
+	shimjson "github.com/SportsGameOdds/sports-odds-api-go/internal/encoding/json"
 
 	"github.com/tidwall/sjson"
 )

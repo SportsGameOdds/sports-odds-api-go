@@ -2,8 +2,8 @@ package apijson_test
 
 import (
 	"encoding/json"
-	"github.com/stainless-sdks/sports-odds-api-go/internal/apijson"
-	"github.com/stainless-sdks/sports-odds-api-go/packages/respjson"
+	"github.com/SportsGameOdds/sports-odds-api-go/internal/apijson"
+	"github.com/SportsGameOdds/sports-odds-api-go/packages/respjson"
 	"testing"
 )
 

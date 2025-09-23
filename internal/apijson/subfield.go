@@ -1,7 +1,7 @@
 package apijson
 
 import (
-	"github.com/stainless-sdks/sports-odds-api-go/packages/respjson"
+	"github.com/SportsGameOdds/sports-odds-api-go/packages/respjson"
 	"reflect"
 )
 

@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"net/http/httputil"
 
-	"github.com/stainless-sdks/sports-odds-api-go/internal/apijson"
-	"github.com/stainless-sdks/sports-odds-api-go/packages/respjson"
+	"github.com/SportsGameOdds/sports-odds-api-go/internal/apijson"
+	"github.com/SportsGameOdds/sports-odds-api-go/packages/respjson"
 )
 
 // Error represents an error that originates from the API, i.e. when a request is

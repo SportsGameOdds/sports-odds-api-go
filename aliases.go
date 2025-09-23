@@ -3,8 +3,8 @@
 package sportsoddsapi
 
 import (
-	"github.com/stainless-sdks/sports-odds-api-go/internal/apierror"
-	"github.com/stainless-sdks/sports-odds-api-go/packages/param"
+	"github.com/SportsGameOdds/sports-odds-api-go/internal/apierror"
+	"github.com/SportsGameOdds/sports-odds-api-go/packages/param"
 )
 
 // aliased to make [param.APIUnion] private when embedding
