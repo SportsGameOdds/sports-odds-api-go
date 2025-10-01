@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.1 (2025-10-01)
+
+Full Changelog: [v1.0.0...v1.0.1](https://github.com/SportsGameOdds/sports-odds-api-go/compare/v1.0.0...v1.0.1)
+
+### Bug Fixes
+
+* bugfix for setting JSON keys with special characters ([7e131c7](https://github.com/SportsGameOdds/sports-odds-api-go/commit/7e131c7df09e1254af21b256079ac2eda195544e))
+
 ## 1.0.0 (2025-09-23)
 
 Full Changelog: [v0.0.1...v1.0.0](https://github.com/SportsGameOdds/sports-odds-api-go/compare/v0.0.1...v1.0.0)
