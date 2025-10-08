@@ -61,19 +61,18 @@ func (r *EventService) GetAutoPaging(ctx context.Context, query EventGetParams, 
 }
 
 type Event struct {
-	Activity EventActivity          `json:"activity"`
-	EventID  string                 `json:"eventID"`
-	Info     EventInfo              `json:"info"`
-	LeagueID string                 `json:"leagueID"`
-	Manual   bool                   `json:"manual"`
-	Odds     map[string]EventOdd    `json:"odds"`
-	Players  map[string]EventPlayer `json:"players"`
-	// Nested results in the format `<periodID>.<statEntityID>.<statID> → number`.
-	Results map[string]map[string]map[string]float64 `json:"results"`
-	SportID string                                   `json:"sportID"`
-	Status  EventStatus                              `json:"status"`
-	Teams   EventTeams                               `json:"teams"`
-	Type    string                                   `json:"type"`
+	Activity EventActivity                            `json:"activity"`
+	EventID  string                                   `json:"eventID"`
+	Info     EventInfo                                `json:"info"`
+	LeagueID string                                   `json:"leagueID"`
+	Manual   bool                                     `json:"manual"`
+	Odds     map[string]EventOdd                      `json:"odds"`
+	Players  map[string]EventPlayer                   `json:"players"`
+	Results  map[string]map[string]map[string]float64 `json:"results"`
+	SportID  string                                   `json:"sportID"`
+	Status   EventStatus                              `json:"status"`
+	Teams    EventTeams                               `json:"teams"`
+	Type     string                                   `json:"type"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Activity    respjson.Field
@@ -481,8 +480,10 @@ type EventGetParams struct {
 	// Only include Events which have have ended (true), only Events which have not
 	// ended (false) or all Events (omit)
 	Ended param.Opt[bool] `query:"ended,omitzero" json:"-"`
-	// An eventID or comma-separated list of eventIDs to get Event data for
+	// An eventID to get Event data for
 	EventID param.Opt[string] `query:"eventID,omitzero" json:"-"`
+	// A comma separated list of eventIDs to get Event data for
+	EventIDs param.Opt[string] `query:"eventIDs,omitzero" json:"-"`
 	// Only include finalized Events (true), exclude unfinalized Events (false) or all
 	// Events (omit)
 	Finalized param.Opt[bool] `query:"finalized,omitzero" json:"-"`

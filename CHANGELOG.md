@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.0 (2025-10-08)
+
+Full Changelog: [v1.0.1...v1.1.0](https://github.com/SportsGameOdds/sports-odds-api-go/compare/v1.0.1...v1.1.0)
+
+### Features
+
+* test ([f6d0dfa](https://github.com/SportsGameOdds/sports-odds-api-go/commit/f6d0dfab2d1ed6801bd14d34586f2a03053d617f))
+
 ## 1.0.1 (2025-10-01)
 
 Full Changelog: [v1.0.0...v1.0.1](https://github.com/SportsGameOdds/sports-odds-api-go/compare/v1.0.0...v1.0.1)
