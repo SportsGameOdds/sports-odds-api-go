@@ -27,11 +27,11 @@ func main() {
 
 	ctx := context.Background()
 
-	fmt.Println("Sports Odds API Go SDK - Odds Query Example\n")
+	fmt.Println("Sports Odds API Go SDK - Odds Query Example")
 
 	// Query for NFL events that are not finalized and have odds available
 	fmt.Println("=== Querying NFL Events with Odds ===")
-	fmt.Println("Filters: leagueID=NFL, finalized=false, oddsAvailable=true\n")
+	fmt.Println("Filters: leagueID=NFL, finalized=false, oddsAvailable=true")
 
 	page, err := client.Events.Get(ctx, sportsoddsapi.EventGetParams{
 		LeagueID:      sportsoddsapi.String("NFL"),
@@ -50,10 +50,9 @@ func main() {
 		os.Exit(0)
 	}
 
-	fmt.Printf("Found %d NFL events with odds\n\n", len(page.Data))
+	fmt.Printf("Found %d NFL events with odds\n", len(page.Data))
 
 	// Parse all odds markets into a map
-	// Structure: map[eventID]map[betTypeID][]odd
 	oddsMap := make(map[string]map[string][]sportsoddsapi.EventOdd)
 
 	for _, event := range page.Data {
@@ -71,7 +70,6 @@ func main() {
 		}
 
 		// Group odds by betTypeID
-		// Note: event.Odds is a map keyed by oddID, not a slice
 		for _, odd := range event.Odds {
 			betTypeID := odd.BetTypeID
 			oddsMap[eventID][betTypeID] = append(oddsMap[eventID][betTypeID], odd)
@@ -91,7 +89,7 @@ func main() {
 	}
 
 	// Display summary
-	fmt.Println("\n=== Summary ===")
+	fmt.Println("=== Summary ===")
 	totalEvents := len(oddsMap)
 	totalBetTypes := 0
 	totalMarkets := 0
@@ -126,5 +124,5 @@ func main() {
 		}
 	}
 
-	fmt.Println("\nOdds query example completed successfully!")
+	fmt.Println("Odds query example completed successfully!")
 }

@@ -27,7 +27,7 @@ func main() {
 
 	ctx := context.Background()
 
-	fmt.Println("Sports Odds API Go SDK - Basic Usage Examples\n")
+	fmt.Println("Sports Odds API Go SDK - Basic Usage Examples")
 
 	// Example 1: Fetch recent events
 	fmt.Println("=== Fetching Events ===")
@@ -54,7 +54,7 @@ func main() {
 	}
 
 	// Example 2: Auto-pagination
-	fmt.Println("\n=== Auto-Pagination Example ===")
+	fmt.Println("=== Auto-Pagination Example ===")
 	iter := client.Events.GetAutoPaging(ctx, sportsoddsapi.EventGetParams{
 		Limit: sportsoddsapi.Float(5),
 	})
@@ -81,7 +81,7 @@ func main() {
 	fmt.Printf("Processed %d events across multiple pages\n", count)
 
 	// Example 3: Error handling
-	fmt.Println("\n=== Error Handling Example ===")
+	fmt.Println("=== Error Handling Example ===")
 	_, err = client.Events.Get(ctx, sportsoddsapi.EventGetParams{
 		EventID: sportsoddsapi.String("invalid-id"),
 	})
@@ -95,5 +95,5 @@ func main() {
 		}
 	}
 
-	fmt.Println("\nExamples completed successfully!")
+	fmt.Println("Examples completed successfully!")
 }
