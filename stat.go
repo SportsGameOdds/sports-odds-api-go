@@ -189,10 +189,12 @@ func (r StatGetParams) URLQuery() (v url.Values, err error) {
 }
 
 type StatGetResponseEnvelope struct {
-	Data []Stat `json:"data"`
+	Data    []Stat `json:"data"`
+	Success bool   `json:"success"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Data        respjson.Field
+		Success     respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string
 	} `json:"-"`

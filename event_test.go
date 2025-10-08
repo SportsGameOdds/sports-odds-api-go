@@ -32,6 +32,7 @@ func TestEventGetWithOptionalParams(t *testing.T) {
 		Cursor:              sportsoddsapi.String("cursor"),
 		Ended:               sportsoddsapi.Bool(true),
 		EventID:             sportsoddsapi.String("eventID"),
+		EventIDs:            sportsoddsapi.String("eventIDs"),
 		Finalized:           sportsoddsapi.Bool(true),
 		IncludeAltLines:     sportsoddsapi.Bool(true),
 		IncludeOpposingOdds: sportsoddsapi.Bool(true),
