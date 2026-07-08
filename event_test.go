@@ -25,6 +25,7 @@ func TestEventGetWithOptionalParams(t *testing.T) {
 	client := sportsoddsapi.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAPIKeyHeader("My API Key Header"),
+		option.WithAPIKeyParam("My API Key Param"),
 	)
 	_, err := client.Events.Get(context.TODO(), sportsoddsapi.EventGetParams{
 		BookmakerID:         sportsoddsapi.String("bookmakerID"),

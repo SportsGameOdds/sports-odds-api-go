@@ -16,6 +16,8 @@ import (
 	"github.com/SportsGameOdds/sports-odds-api-go/packages/respjson"
 )
 
+// Get info about Events (includes odds, results, teams, and other metadata)
+//
 // StreamService contains methods and other services that help with interacting
 // with the SportsGameOdds API.
 //
@@ -40,7 +42,7 @@ func (r *StreamService) Events(ctx context.Context, query StreamEventsParams, op
 	opts = slices.Concat(r.Options, opts)
 	path := "stream/events"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 type StreamEventsResponse struct {

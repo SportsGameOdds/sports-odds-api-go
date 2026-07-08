@@ -18,6 +18,8 @@ import (
 	"github.com/SportsGameOdds/sports-odds-api-go/packages/respjson"
 )
 
+// Get info about Events (includes odds, results, teams, and other metadata)
+//
 // EventService contains methods and other services that help with interacting with
 // the SportsGameOdds API.
 //

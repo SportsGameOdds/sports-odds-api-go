@@ -17,6 +17,8 @@ import (
 	"github.com/SportsGameOdds/sports-odds-api-go/packages/respjson"
 )
 
+// Get Team-related data
+//
 // TeamService contains methods and other services that help with interacting with
 // the SportsGameOdds API.
 //

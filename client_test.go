@@ -38,7 +38,7 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.Events.Get(context.Background(), sportsoddsapi.EventGetParams{})
+	_, _ = client.Events.Get(context.Background(), sportsoddsapi.EventGetParams{})
 	if userAgent != fmt.Sprintf("SportsGameOdds/Go %s", internal.PackageVersion) {
 		t.Errorf("Expected User-Agent to be correct, but got: %#v", userAgent)
 	}

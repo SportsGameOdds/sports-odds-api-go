@@ -13,6 +13,8 @@ import (
 	"github.com/SportsGameOdds/sports-odds-api-go/packages/respjson"
 )
 
+// Get Sport-related data
+//
 // SportService contains methods and other services that help with interacting with
 // the SportsGameOdds API.
 //
@@ -39,10 +41,10 @@ func (r *SportService) Get(ctx context.Context, opts ...option.RequestOption) (r
 	path := "sports/"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &env, opts...)
 	if err != nil {
-		return
+		return nil, err
 	}
 	res = &env.Data
-	return
+	return res, nil
 }
 
 type Sport struct {
