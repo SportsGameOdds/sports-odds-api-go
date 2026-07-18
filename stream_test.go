@@ -24,6 +24,7 @@ func TestStreamEventsWithOptionalParams(t *testing.T) {
 	client := sportsoddsapi.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAPIKeyHeader("My API Key Header"),
+		option.WithAPIKeyParam("My API Key Param"),
 	)
 	_, err := client.Stream.Events(context.TODO(), sportsoddsapi.StreamEventsParams{
 		EventID:  sportsoddsapi.String("eventID"),

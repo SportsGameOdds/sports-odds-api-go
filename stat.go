@@ -16,6 +16,8 @@ import (
 	"github.com/SportsGameOdds/sports-odds-api-go/packages/respjson"
 )
 
+// Get data on specific Stats
+//
 // StatService contains methods and other services that help with interacting with
 // the SportsGameOdds API.
 //
@@ -42,10 +44,10 @@ func (r *StatService) Get(ctx context.Context, query StatGetParams, opts ...opti
 	path := "stats/"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &env, opts...)
 	if err != nil {
-		return
+		return nil, err
 	}
 	res = &env.Data
-	return
+	return res, nil
 }
 
 type Stat struct {
