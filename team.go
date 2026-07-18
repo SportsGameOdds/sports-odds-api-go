@@ -62,24 +62,30 @@ func (r *TeamService) GetAutoPaging(ctx context.Context, query TeamGetParams, op
 }
 
 type Team struct {
+	Coach     TeamCoach     `json:"coach"`
 	Colors    TeamColors    `json:"colors"`
 	LeagueID  string        `json:"leagueID"`
 	Logo      string        `json:"logo"`
 	Lookups   TeamLookups   `json:"lookups"`
 	Names     TeamNames     `json:"names"`
+	Owner     TeamOwner     `json:"owner"`
 	SportID   string        `json:"sportID"`
 	Standings TeamStandings `json:"standings"`
 	TeamID    string        `json:"teamID"`
+	Venue     TeamVenue     `json:"venue"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
+		Coach       respjson.Field
 		Colors      respjson.Field
 		LeagueID    respjson.Field
 		Logo        respjson.Field
 		Lookups     respjson.Field
 		Names       respjson.Field
+		Owner       respjson.Field
 		SportID     respjson.Field
 		Standings   respjson.Field
 		TeamID      respjson.Field
+		Venue       respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string
 	} `json:"-"`
@@ -88,6 +94,22 @@ type Team struct {
 // Returns the unmodified JSON received from the API
 func (r Team) RawJSON() string { return r.JSON.raw }
 func (r *Team) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type TeamCoach struct {
+	Name string `json:"name"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Name        respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r TeamCoach) RawJSON() string { return r.JSON.raw }
+func (r *TeamCoach) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -149,19 +171,39 @@ func (r *TeamNames) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+type TeamOwner struct {
+	Name string `json:"name"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Name        respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r TeamOwner) RawJSON() string { return r.JSON.raw }
+func (r *TeamOwner) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 type TeamStandings struct {
+	Last5    string  `json:"last5"`
 	Losses   float64 `json:"losses"`
 	Played   float64 `json:"played"`
 	Position string  `json:"position"`
 	Record   string  `json:"record"`
+	Streak   float64 `json:"streak"`
 	Ties     float64 `json:"ties"`
 	Wins     float64 `json:"wins"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
+		Last5       respjson.Field
 		Losses      respjson.Field
 		Played      respjson.Field
 		Position    respjson.Field
 		Record      respjson.Field
+		Streak      respjson.Field
 		Ties        respjson.Field
 		Wins        respjson.Field
 		ExtraFields map[string]respjson.Field
@@ -175,9 +217,39 @@ func (r *TeamStandings) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+type TeamVenue struct {
+	Address     string  `json:"address"`
+	Capacity    float64 `json:"capacity"`
+	City        string  `json:"city"`
+	CountryCode string  `json:"countryCode"`
+	CountryName string  `json:"countryName"`
+	Name        string  `json:"name"`
+	RegionCode  string  `json:"regionCode"`
+	RegionName  string  `json:"regionName"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Address     respjson.Field
+		Capacity    respjson.Field
+		City        respjson.Field
+		CountryCode respjson.Field
+		CountryName respjson.Field
+		Name        respjson.Field
+		RegionCode  respjson.Field
+		RegionName  respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r TeamVenue) RawJSON() string { return r.JSON.raw }
+func (r *TeamVenue) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 type TeamGetParams struct {
-	// The cursor for the request. Used to get the next group of Teams. This should be
-	// the nextCursor from the prior response.
+	// The cursor for the request. Used to get the next group of Teams. This is an
+	// opaque token — pass the nextCursor value from the prior response unchanged.
 	Cursor param.Opt[string] `query:"cursor,omitzero" json:"-"`
 	// A single leagueID or comma-separated list of leagueIDs to get Teams for
 	LeagueID param.Opt[string] `query:"leagueID,omitzero" json:"-"`

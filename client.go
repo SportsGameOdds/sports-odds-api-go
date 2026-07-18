@@ -20,6 +20,8 @@ type Client struct {
 	Options []option.RequestOption
 	// Get info about Events (includes odds, results, teams, and other metadata)
 	Events EventService
+	// Get metadata on supported Markets
+	Markets MarketService
 	// Get Team-related data
 	Teams TeamService
 	// Get Player-related data
@@ -72,6 +74,7 @@ func NewClient(opts ...option.RequestOption) (r Client) {
 	r = Client{Options: opts}
 
 	r.Events = NewEventService(opts...)
+	r.Markets = NewMarketService(opts...)
 	r.Teams = NewTeamService(opts...)
 	r.Players = NewPlayerService(opts...)
 	r.Leagues = NewLeagueService(opts...)

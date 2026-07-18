@@ -152,8 +152,8 @@ func (r *PlayerPlayerTeam) UnmarshalJSON(data []byte) error {
 }
 
 type PlayerGetParams struct {
-	// The cursor for the request. Used to get the next group of Players. This should
-	// be the nextCursor from the prior response.
+	// The cursor for the request. Used to get the next group of Players. This is an
+	// opaque token — pass the nextCursor value from the prior response unchanged.
 	Cursor param.Opt[string] `query:"cursor,omitzero" json:"-"`
 	// EventID to get Players data for
 	EventID param.Opt[string] `query:"eventID,omitzero" json:"-"`

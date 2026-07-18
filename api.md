@@ -8,6 +8,16 @@ Methods:
 
 - <code title="get /events/">client.Events.<a href="https://pkg.go.dev/github.com/SportsGameOdds/sports-odds-api-go#EventService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/SportsGameOdds/sports-odds-api-go">sportsoddsapi</a>.<a href="https://pkg.go.dev/github.com/SportsGameOdds/sports-odds-api-go#EventGetParams">EventGetParams</a>) (\*<a href="https://pkg.go.dev/github.com/SportsGameOdds/sports-odds-api-go/packages/pagination">pagination</a>.<a href="https://pkg.go.dev/github.com/SportsGameOdds/sports-odds-api-go/packages/pagination#NextCursorPage">NextCursorPage</a>[<a href="https://pkg.go.dev/github.com/SportsGameOdds/sports-odds-api-go">sportsoddsapi</a>.<a href="https://pkg.go.dev/github.com/SportsGameOdds/sports-odds-api-go#Event">Event</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
+# Markets
+
+Response Types:
+
+- <a href="https://pkg.go.dev/github.com/SportsGameOdds/sports-odds-api-go">sportsoddsapi</a>.<a href="https://pkg.go.dev/github.com/SportsGameOdds/sports-odds-api-go#Market">Market</a>
+
+Methods:
+
+- <code title="get /markets/">client.Markets.<a href="https://pkg.go.dev/github.com/SportsGameOdds/sports-odds-api-go#MarketService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, query <a href="https://pkg.go.dev/github.com/SportsGameOdds/sports-odds-api-go">sportsoddsapi</a>.<a href="https://pkg.go.dev/github.com/SportsGameOdds/sports-odds-api-go#MarketGetParams">MarketGetParams</a>) (\*<a href="https://pkg.go.dev/github.com/SportsGameOdds/sports-odds-api-go/packages/pagination">pagination</a>.<a href="https://pkg.go.dev/github.com/SportsGameOdds/sports-odds-api-go/packages/pagination#NextCursorPage">NextCursorPage</a>[<a href="https://pkg.go.dev/github.com/SportsGameOdds/sports-odds-api-go">sportsoddsapi</a>.<a href="https://pkg.go.dev/github.com/SportsGameOdds/sports-odds-api-go#Market">Market</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
+
 # Teams
 
 Response Types:
