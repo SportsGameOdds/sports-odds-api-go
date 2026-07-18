@@ -23,6 +23,7 @@ func TestManualPagination(t *testing.T) {
 	client := sportsoddsapi.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAPIKeyHeader("My API Key Header"),
+		option.WithAPIKeyParam("My API Key Param"),
 	)
 	page, err := client.Events.Get(context.TODO(), sportsoddsapi.EventGetParams{
 		Limit: sportsoddsapi.Float(30),
@@ -33,7 +34,7 @@ func TestManualPagination(t *testing.T) {
 	for _, event := range page.Data {
 		t.Logf("%+v\n", event.Activity)
 	}
-	// Prism mock isn't going to give us real pagination
+	// The mock server isn't going to give us real pagination
 	page, err = page.GetNextPage()
 	if err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())

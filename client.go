@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"slices"
+	"strings"
 
 	"github.com/SportsGameOdds/sports-odds-api-go/internal/requestconfig"
 	"github.com/SportsGameOdds/sports-odds-api-go/option"
@@ -17,21 +18,31 @@ import (
 // directly, and instead use the [NewClient] method instead.
 type Client struct {
 	Options []option.RequestOption
-	Events  EventService
-	Teams   TeamService
+	// Get info about Events (includes odds, results, teams, and other metadata)
+	Events EventService
+	// Get metadata on supported Markets
+	Markets MarketService
+	// Get Team-related data
+	Teams TeamService
+	// Get Player-related data
 	Players PlayerService
+	// Get League-related data
 	Leagues LeagueService
-	Sports  SportService
-	Stats   StatService
+	// Get Sport-related data
+	Sports SportService
+	// Get data on specific Stats
+	Stats StatService
+	// Get data related to your Account & API key
 	Account AccountService
-	Stream  StreamService
+	// Get info about Events (includes odds, results, teams, and other metadata)
+	Stream StreamService
 }
 
 // DefaultClientOptions read from the environment (SPORTS_ODDS_API_KEY_HEADER,
 // SPORTS_ODDS_API_KEY_HEADER, SPORTS_GAME_ODDS_BASE_URL). This should be used to
 // initialize new clients.
 func DefaultClientOptions() []option.RequestOption {
-	defaults := []option.RequestOption{option.WithEnvironmentProduction()}
+	defaults := []option.RequestOption{option.WithHTTPClient(defaultHTTPClient()), option.WithEnvironmentProduction()}
 	if o, ok := os.LookupEnv("SPORTS_GAME_ODDS_BASE_URL"); ok {
 		defaults = append(defaults, option.WithBaseURL(o))
 	}
@@ -40,6 +51,14 @@ func DefaultClientOptions() []option.RequestOption {
 	}
 	if o, ok := os.LookupEnv("SPORTS_ODDS_API_KEY_HEADER"); ok {
 		defaults = append(defaults, option.WithAPIKeyParam(o))
+	}
+	if o, ok := os.LookupEnv("SPORTS_GAME_ODDS_CUSTOM_HEADERS"); ok {
+		for _, line := range strings.Split(o, "\n") {
+			colon := strings.Index(line, ":")
+			if colon >= 0 {
+				defaults = append(defaults, option.WithHeader(strings.TrimSpace(line[:colon]), strings.TrimSpace(line[colon+1:])))
+			}
+		}
 	}
 	return defaults
 }
@@ -55,6 +74,7 @@ func NewClient(opts ...option.RequestOption) (r Client) {
 	r = Client{Options: opts}
 
 	r.Events = NewEventService(opts...)
+	r.Markets = NewMarketService(opts...)
 	r.Teams = NewTeamService(opts...)
 	r.Players = NewPlayerService(opts...)
 	r.Leagues = NewLeagueService(opts...)

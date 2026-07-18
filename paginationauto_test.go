@@ -23,11 +23,12 @@ func TestAutoPagination(t *testing.T) {
 	client := sportsoddsapi.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAPIKeyHeader("My API Key Header"),
+		option.WithAPIKeyParam("My API Key Param"),
 	)
 	iter := client.Events.GetAutoPaging(context.TODO(), sportsoddsapi.EventGetParams{
 		Limit: sportsoddsapi.Float(30),
 	})
-	// Prism mock isn't going to give us real pagination
+	// The mock server isn't going to give us real pagination
 	for i := 0; i < 3 && iter.Next(); i++ {
 		event := iter.Current()
 		t.Logf("%+v\n", event.Activity)

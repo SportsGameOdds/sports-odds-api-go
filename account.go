@@ -14,6 +14,8 @@ import (
 	"github.com/SportsGameOdds/sports-odds-api-go/packages/respjson"
 )
 
+// Get data related to your Account & API key
+//
 // AccountService contains methods and other services that help with interacting
 // with the SportsGameOdds API.
 //
@@ -40,10 +42,10 @@ func (r *AccountService) GetUsage(ctx context.Context, opts ...option.RequestOpt
 	path := "account/usage"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &env, opts...)
 	if err != nil {
-		return
+		return nil, err
 	}
 	res = &env.Data
-	return
+	return res, nil
 }
 
 type AccountUsage struct {

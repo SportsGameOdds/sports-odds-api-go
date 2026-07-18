@@ -23,6 +23,7 @@ func TestUsage(t *testing.T) {
 	client := sportsoddsapi.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAPIKeyHeader("My API Key Header"),
+		option.WithAPIKeyParam("My API Key Param"),
 	)
 	page, err := client.Events.Get(context.TODO(), sportsoddsapi.EventGetParams{})
 	if err != nil {

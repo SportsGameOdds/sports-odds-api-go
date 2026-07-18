@@ -18,6 +18,8 @@ import (
 	"github.com/SportsGameOdds/sports-odds-api-go/packages/respjson"
 )
 
+// Get info about Events (includes odds, results, teams, and other metadata)
+//
 // EventService contains methods and other services that help with interacting with
 // the SportsGameOdds API.
 //
@@ -61,18 +63,19 @@ func (r *EventService) GetAutoPaging(ctx context.Context, query EventGetParams, 
 }
 
 type Event struct {
-	Activity EventActivity                            `json:"activity"`
-	EventID  string                                   `json:"eventID"`
-	Info     EventInfo                                `json:"info"`
-	LeagueID string                                   `json:"leagueID"`
-	Manual   bool                                     `json:"manual"`
-	Odds     map[string]EventOdd                      `json:"odds"`
-	Players  map[string]EventPlayer                   `json:"players"`
-	Results  map[string]map[string]map[string]float64 `json:"results"`
-	SportID  string                                   `json:"sportID"`
-	Status   EventStatus                              `json:"status"`
-	Teams    EventTeams                               `json:"teams"`
-	Type     string                                   `json:"type"`
+	Activity EventActivity          `json:"activity"`
+	EventID  string                 `json:"eventID"`
+	Info     EventInfo              `json:"info"`
+	LeagueID string                 `json:"leagueID"`
+	Manual   bool                   `json:"manual"`
+	Odds     map[string]EventOdd    `json:"odds"`
+	Players  map[string]EventPlayer `json:"players"`
+	// Nested results in the format `{periodID}.{statEntityID}.{statID} → number`.
+	Results map[string]map[string]map[string]float64 `json:"results"`
+	SportID string                                   `json:"sportID"`
+	Status  EventStatus                              `json:"status"`
+	Teams   EventTeams                               `json:"teams"`
+	Type    string                                   `json:"type"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Activity    respjson.Field
@@ -117,10 +120,16 @@ func (r *EventActivity) UnmarshalJSON(data []byte) error {
 }
 
 type EventInfo struct {
-	SeasonWeek string `json:"seasonWeek"`
+	Broadcasts []EventInfoBroadcast `json:"broadcasts"`
+	Referee    EventInfoReferee     `json:"referee"`
+	SeasonWeek string               `json:"seasonWeek"`
+	Venue      EventInfoVenue       `json:"venue"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
+		Broadcasts  respjson.Field
+		Referee     respjson.Field
 		SeasonWeek  respjson.Field
+		Venue       respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string
 	} `json:"-"`
@@ -129,6 +138,73 @@ type EventInfo struct {
 // Returns the unmodified JSON received from the API
 func (r EventInfo) RawJSON() string { return r.JSON.raw }
 func (r *EventInfo) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type EventInfoBroadcast struct {
+	BroadcasterID string `json:"broadcasterID"`
+	Name          string `json:"name"`
+	// Any of "tv", "webstream", "subscription", "sportsbook".
+	Type string `json:"type"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		BroadcasterID respjson.Field
+		Name          respjson.Field
+		Type          respjson.Field
+		ExtraFields   map[string]respjson.Field
+		raw           string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r EventInfoBroadcast) RawJSON() string { return r.JSON.raw }
+func (r *EventInfoBroadcast) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type EventInfoReferee struct {
+	Name string `json:"name"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Name        respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r EventInfoReferee) RawJSON() string { return r.JSON.raw }
+func (r *EventInfoReferee) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type EventInfoVenue struct {
+	Address     string  `json:"address"`
+	Capacity    float64 `json:"capacity"`
+	City        string  `json:"city"`
+	CountryCode string  `json:"countryCode"`
+	CountryName string  `json:"countryName"`
+	Name        string  `json:"name"`
+	RegionCode  string  `json:"regionCode"`
+	RegionName  string  `json:"regionName"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Address     respjson.Field
+		Capacity    respjson.Field
+		City        respjson.Field
+		CountryCode respjson.Field
+		CountryName respjson.Field
+		Name        respjson.Field
+		RegionCode  respjson.Field
+		RegionName  respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r EventInfoVenue) RawJSON() string { return r.JSON.raw }
+func (r *EventInfoVenue) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -193,24 +269,36 @@ func (r *EventOdd) UnmarshalJSON(data []byte) error {
 }
 
 type EventOddByBookmaker struct {
-	Available     bool      `json:"available"`
-	BookmakerID   string    `json:"bookmakerID"`
-	IsMainLine    bool      `json:"isMainLine"`
-	LastUpdatedAt time.Time `json:"lastUpdatedAt" format:"date-time"`
-	Odds          string    `json:"odds"`
-	OverUnder     string    `json:"overUnder"`
-	Spread        string    `json:"spread"`
+	Available      bool      `json:"available"`
+	BookmakerID    string    `json:"bookmakerID"`
+	CloseOdds      string    `json:"closeOdds"`
+	CloseOverUnder string    `json:"closeOverUnder"`
+	CloseSpread    string    `json:"closeSpread"`
+	IsMainLine     bool      `json:"isMainLine"`
+	LastUpdatedAt  time.Time `json:"lastUpdatedAt" format:"date-time"`
+	Odds           string    `json:"odds"`
+	OpenOdds       string    `json:"openOdds"`
+	OpenOverUnder  string    `json:"openOverUnder"`
+	OpenSpread     string    `json:"openSpread"`
+	OverUnder      string    `json:"overUnder"`
+	Spread         string    `json:"spread"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
-		Available     respjson.Field
-		BookmakerID   respjson.Field
-		IsMainLine    respjson.Field
-		LastUpdatedAt respjson.Field
-		Odds          respjson.Field
-		OverUnder     respjson.Field
-		Spread        respjson.Field
-		ExtraFields   map[string]respjson.Field
-		raw           string
+		Available      respjson.Field
+		BookmakerID    respjson.Field
+		CloseOdds      respjson.Field
+		CloseOverUnder respjson.Field
+		CloseSpread    respjson.Field
+		IsMainLine     respjson.Field
+		LastUpdatedAt  respjson.Field
+		Odds           respjson.Field
+		OpenOdds       respjson.Field
+		OpenOverUnder  respjson.Field
+		OpenSpread     respjson.Field
+		OverUnder      respjson.Field
+		Spread         respjson.Field
+		ExtraFields    map[string]respjson.Field
+		raw            string
 	} `json:"-"`
 }
 
@@ -227,18 +315,24 @@ type EventPlayer struct {
 	Name      string `json:"name"`
 	Photo     string `json:"photo"`
 	PlayerID  string `json:"playerID"`
-	TeamID    string `json:"teamID"`
+	// Any of "ir", "active", "out", "suspended", "questionable", "doubtful",
+	// "probable".
+	Status        string `json:"status"`
+	StatusDetails string `json:"statusDetails"`
+	TeamID        string `json:"teamID"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
-		Alias       respjson.Field
-		FirstName   respjson.Field
-		LastName    respjson.Field
-		Name        respjson.Field
-		Photo       respjson.Field
-		PlayerID    respjson.Field
-		TeamID      respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
+		Alias         respjson.Field
+		FirstName     respjson.Field
+		LastName      respjson.Field
+		Name          respjson.Field
+		Photo         respjson.Field
+		PlayerID      respjson.Field
+		Status        respjson.Field
+		StatusDetails respjson.Field
+		TeamID        respjson.Field
+		ExtraFields   map[string]respjson.Field
+		raw           string
 	} `json:"-"`
 }
 
@@ -474,8 +568,8 @@ type EventGetParams struct {
 	// Only include cancelled Events (true), only non-cancelled Events (false) or all
 	// Events (omit)
 	Cancelled param.Opt[bool] `query:"cancelled,omitzero" json:"-"`
-	// The cursor for the request. Used to get the next group of Events. This should be
-	// the nextCursor from the prior response.
+	// The cursor for the request. Used to get the next group of Events. This is an
+	// opaque token — pass the nextCursor value from the prior response unchanged.
 	Cursor param.Opt[string] `query:"cursor,omitzero" json:"-"`
 	// Only include Events which have have ended (true), only Events which have not
 	// ended (false) or all Events (omit)
@@ -484,11 +578,17 @@ type EventGetParams struct {
 	EventID param.Opt[string] `query:"eventID,omitzero" json:"-"`
 	// A comma separated list of eventIDs to get Event data for
 	EventIDs param.Opt[string] `query:"eventIDs,omitzero" json:"-"`
+	// Whether to expand the results object to include all stat values rather than just
+	// the base set
+	ExpandResults param.Opt[bool] `query:"expandResults,omitzero" json:"-"`
 	// Only include finalized Events (true), exclude unfinalized Events (false) or all
 	// Events (omit)
 	Finalized param.Opt[bool] `query:"finalized,omitzero" json:"-"`
 	// Whether to include alternate lines in the odds byBookmaker data
 	IncludeAltLines param.Opt[bool] `query:"includeAltLines,omitzero" json:"-"`
+	// Whether to include open and close odds values (openOdds, closeOdds, openSpread,
+	// closeSpread, openOverUnder, closeOverUnder) in the odds byBookmaker data
+	IncludeOpenCloseOdds param.Opt[bool] `query:"includeOpenCloseOdds,omitzero" json:"-"`
 	// Whether to include opposing odds for each included oddID
 	IncludeOpposingOdds param.Opt[bool] `query:"includeOpposingOdds,omitzero" json:"-"`
 	// A leagueID or comma-separated list of leagueIDs to get Events for
