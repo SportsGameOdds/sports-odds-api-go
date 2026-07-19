@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.0](https://github.com/SportsGameOdds/sports-odds-api-go/compare/v1.2.0...v1.3.0) (2026-07-18)
+
+
+### Features
+
+* add support for the /markets endpoint ([23ffd8e](https://github.com/SportsGameOdds/sports-odds-api-go/commit/23ffd8ef80299a1708eb9d3cf06b5bd02f27e93c))
+* initial stlc build ([541c4e7](https://github.com/SportsGameOdds/sports-odds-api-go/commit/541c4e7d21a3d729641bd6a77a32fb449199be54))
+
 ## 1.2.0 (2026-07-08)
 
 Full Changelog: [v1.1.0...v1.2.0](https://github.com/SportsGameOdds/sports-odds-api-go/compare/v1.1.0...v1.2.0)
