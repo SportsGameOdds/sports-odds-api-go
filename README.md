@@ -43,7 +43,7 @@ import (
 Or to pin the version:
 
 ```sh
-go get -u 'github.com/SportsGameOdds/sports-odds-api-go@v0.0.1'
+go get -u 'github.com/SportsGameOdds/sports-odds-api-go@v1.3.0'
 ```
 
 ## Obtain an API Key
