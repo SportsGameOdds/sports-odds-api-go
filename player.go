@@ -159,7 +159,8 @@ type PlayerGetParams struct {
 	EventID param.Opt[string] `query:"eventID,omitzero" json:"-"`
 	// The maximum number of Players to return
 	Limit param.Opt[float64] `query:"limit,omitzero" json:"-"`
-	// PlayerID to get data for
+	// PlayerID to get data for. If a playerID has since changed, the Player which
+	// lists it in its aliases is returned
 	PlayerID param.Opt[string] `query:"playerID,omitzero" json:"-"`
 	// TeamID to get Players data for
 	TeamID param.Opt[string] `query:"teamID,omitzero" json:"-"`

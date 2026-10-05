@@ -120,7 +120,8 @@ func (r *StreamEventsResponsePusherOptionsChannelAuthorization) UnmarshalJSON(da
 }
 
 type StreamEventsParams struct {
-	// An eventID to stream events for
+	// An eventID to stream events for. If the eventID has since changed, the Event
+	// which lists it in its aliases is streamed
 	EventID param.Opt[string] `query:"eventID,omitzero" json:"-"`
 	// The feed you would like to subscribe to
 	Feed param.Opt[string] `query:"feed,omitzero" json:"-"`

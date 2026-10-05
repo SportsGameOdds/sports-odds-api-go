@@ -62,6 +62,7 @@ func (r *TeamService) GetAutoPaging(ctx context.Context, query TeamGetParams, op
 }
 
 type Team struct {
+	Aliases   []string      `json:"aliases"`
 	Coach     TeamCoach     `json:"coach"`
 	Colors    TeamColors    `json:"colors"`
 	LeagueID  string        `json:"leagueID"`
@@ -75,6 +76,7 @@ type Team struct {
 	Venue     TeamVenue     `json:"venue"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
+		Aliases     respjson.Field
 		Coach       respjson.Field
 		Colors      respjson.Field
 		LeagueID    respjson.Field
@@ -257,7 +259,8 @@ type TeamGetParams struct {
 	Limit param.Opt[float64] `query:"limit,omitzero" json:"-"`
 	// A single sportID or comma-separated list of sportIDs to get Teams for
 	SportID param.Opt[string] `query:"sportID,omitzero" json:"-"`
-	// A single teamID or comma-separated list of teamIDs to get data for
+	// A single teamID or comma-separated list of teamIDs to get data for. If a teamID
+	// has since changed, the Team which lists it in its aliases is returned
 	TeamID param.Opt[string] `query:"teamID,omitzero" json:"-"`
 	paramObj
 }
