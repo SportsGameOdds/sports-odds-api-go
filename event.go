@@ -64,6 +64,7 @@ func (r *EventService) GetAutoPaging(ctx context.Context, query EventGetParams, 
 
 type Event struct {
 	Activity EventActivity          `json:"activity"`
+	Aliases  []string               `json:"aliases"`
 	EventID  string                 `json:"eventID"`
 	Info     EventInfo              `json:"info"`
 	LeagueID string                 `json:"leagueID"`
@@ -79,6 +80,7 @@ type Event struct {
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Activity    respjson.Field
+		Aliases     respjson.Field
 		EventID     respjson.Field
 		Info        respjson.Field
 		LeagueID    respjson.Field
@@ -574,9 +576,11 @@ type EventGetParams struct {
 	// Only include Events which have have ended (true), only Events which have not
 	// ended (false) or all Events (omit)
 	Ended param.Opt[bool] `query:"ended,omitzero" json:"-"`
-	// An eventID to get Event data for
+	// An eventID to get Event data for. If an eventID has since changed, the Event
+	// which lists it in its aliases is returned
 	EventID param.Opt[string] `query:"eventID,omitzero" json:"-"`
-	// A comma separated list of eventIDs to get Event data for
+	// A comma separated list of eventIDs to get Event data for. If an eventID has
+	// since changed, the Event which lists it in its aliases is returned
 	EventIDs param.Opt[string] `query:"eventIDs,omitzero" json:"-"`
 	// Whether to expand the results object to include all stat values rather than just
 	// the base set
