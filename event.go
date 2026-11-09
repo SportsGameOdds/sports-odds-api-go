@@ -189,6 +189,7 @@ type EventInfoVenue struct {
 	Name        string  `json:"name"`
 	RegionCode  string  `json:"regionCode"`
 	RegionName  string  `json:"regionName"`
+	VenueID     string  `json:"venueID"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Address     respjson.Field
@@ -199,6 +200,7 @@ type EventInfoVenue struct {
 		Name        respjson.Field
 		RegionCode  respjson.Field
 		RegionName  respjson.Field
+		VenueID     respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string
 	} `json:"-"`
