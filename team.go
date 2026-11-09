@@ -154,14 +154,24 @@ func (r *TeamLookups) UnmarshalJSON(data []byte) error {
 }
 
 type TeamNames struct {
-	Long   string `json:"long"`
-	Medium string `json:"medium"`
-	Short  string `json:"short"`
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
+	Location  string `json:"location"`
+	Long      string `json:"long"`
+	Medium    string `json:"medium"`
+	Nickname  string `json:"nickname"`
+	Short     string `json:"short"`
+	Suffix    string `json:"suffix"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
+		FirstName   respjson.Field
+		LastName    respjson.Field
+		Location    respjson.Field
 		Long        respjson.Field
 		Medium      respjson.Field
+		Nickname    respjson.Field
 		Short       respjson.Field
+		Suffix      respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string
 	} `json:"-"`
@@ -228,6 +238,7 @@ type TeamVenue struct {
 	Name        string  `json:"name"`
 	RegionCode  string  `json:"regionCode"`
 	RegionName  string  `json:"regionName"`
+	VenueID     string  `json:"venueID"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Address     respjson.Field
@@ -238,6 +249,7 @@ type TeamVenue struct {
 		Name        respjson.Field
 		RegionCode  respjson.Field
 		RegionName  respjson.Field
+		VenueID     respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string
 	} `json:"-"`
