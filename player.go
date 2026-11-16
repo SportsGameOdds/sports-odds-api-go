@@ -63,7 +63,7 @@ func (r *PlayerService) GetAutoPaging(ctx context.Context, query PlayerGetParams
 
 type Player struct {
 	Aliases      []string                    `json:"aliases"`
-	JerseyNumber float64                     `json:"jerseyNumber"`
+	JerseyNumber string                      `json:"jerseyNumber"`
 	LeagueID     string                      `json:"leagueID"`
 	Lookups      PlayerLookups               `json:"lookups"`
 	Names        PlayerNames                 `json:"names"`
@@ -119,11 +119,15 @@ type PlayerNames struct {
 	Display   string `json:"display"`
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
+	Nickname  string `json:"nickname"`
+	Suffix    string `json:"suffix"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Display     respjson.Field
 		FirstName   respjson.Field
 		LastName    respjson.Field
+		Nickname    respjson.Field
+		Suffix      respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string
 	} `json:"-"`
