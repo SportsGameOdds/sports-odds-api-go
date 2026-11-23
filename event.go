@@ -274,11 +274,9 @@ func (r *EventOdd) UnmarshalJSON(data []byte) error {
 
 type EventOddByBookmaker struct {
 	Available      bool      `json:"available"`
-	BookmakerID    string    `json:"bookmakerID"`
 	CloseOdds      string    `json:"closeOdds"`
 	CloseOverUnder string    `json:"closeOverUnder"`
 	CloseSpread    string    `json:"closeSpread"`
-	IsMainLine     bool      `json:"isMainLine"`
 	LastUpdatedAt  time.Time `json:"lastUpdatedAt" format:"date-time"`
 	Odds           string    `json:"odds"`
 	OpenOdds       string    `json:"openOdds"`
@@ -289,11 +287,9 @@ type EventOddByBookmaker struct {
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Available      respjson.Field
-		BookmakerID    respjson.Field
 		CloseOdds      respjson.Field
 		CloseOverUnder respjson.Field
 		CloseSpread    respjson.Field
-		IsMainLine     respjson.Field
 		LastUpdatedAt  respjson.Field
 		Odds           respjson.Field
 		OpenOdds       respjson.Field
